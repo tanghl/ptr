@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO" monitorInterval="1800">
+    <Properties>
+        <Property name="basePath">./log</Property>
+    </Properties>
+    <appenders>
+        <RollingFile name="fileLogger" fileName="${basePath}/dev.log" filePattern="${basePath}/dev-%d{yyyy-MM-dd}.log">
+            <PatternLayout>
+                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
+        <Console name="console" target="SYSTEM_OUT">
+            <PatternLayout   pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n" />
+        </Console>
+    </appenders>
+
+    <loggers>
+        <Logger name="com.le" level="INFO" additivity="true">
+            <appender-ref ref="fileLogger" level="debug" />
+        </Logger>
+        <Root level="INFO" additivity="false">
+            <appender-ref ref="console" />
+        </Root>
+    </loggers>
+</Configuration>
