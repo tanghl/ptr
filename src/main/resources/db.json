@@ -1,0 +1,20 @@
+{
+  "mysql":{
+    "driver":"com.mysql.cj.jdbc.Driver",
+    "jdbc":"jdbc:mysql://10.110.91.66:3307/afp",
+    "password":"DDvsJPwOJvO2r5QG2rFX",
+    "username":"afp_r",
+    "initSize":5,
+    "demand":"SELECT schedule_formal.orderitem_id AS id, (CASE WHEN cpm IS NULL THEN 0 ELSE cpm END + CASE WHEN lack_cpm IS NULL THEN 0 ELSE lack_cpm END )AS cpm FROM schedule_formal LEFT JOIN ass_orderitem_lackpv ON schedule_formal.orderitem_id = ass_orderitem_lackpv.orderitem_id LEFT JOIN orderitem_formal ON schedule_formal.orderitem_id = orderitem_formal.id LEFT JOIN orders_formal ON orderitem_formal.order_id = orders_formal.id WHERE schedule_formal.cpm > 0 AND schedule_formal.delete_flag = 0 AND orderitem_formal.delete_flag = 0 AND orderitem_formal.online_status = 0 AND orderitem_formal.settle_type = 2 AND orders_formal.delete_flag = 0 AND orders_formal.online_status = 0 AND schedule_formal. DAY = ?"
+  },
+  "hive":{
+    "driver":"org.apache.hive.jdbc.HiveDriver",
+    "jdbc":"jdbc:hive2://10.110.156.27:10000/temp",
+    "password":"",
+    "username":"",
+    "initSize":5,
+    "supply":"select id, mc_cnt from temp.supply_view",
+    "relation":"select orderitem_id, id from temp.supply_demand_rel_view",
+    "member":"select orderitem_id, cnt from temp.temp_orderitem_minute_curve  where dt=?"
+  }
+}
